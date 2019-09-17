@@ -291,7 +291,7 @@ class MaxPoolingAggregator(GraphSAGEAggregator):
             )
             self.w_pool = self.add_weight(
                 name="w_pool",
-                shape=(input_shape[1][3], self.hidden_dim),
+                shape=(int(input_shape[1][3]), self.hidden_dim),
                 initializer=self._initializer,
                 trainable=True,
             )
@@ -369,7 +369,7 @@ class MeanPoolingAggregator(GraphSAGEAggregator):
             )
             self.w_pool = self.add_weight(
                 name="w_pool",
-                shape=(input_shape[1][3], self.hidden_dim),
+                shape=(int(input_shape[1][3]), self.hidden_dim),
                 initializer=self._initializer,
                 trainable=True,
             )

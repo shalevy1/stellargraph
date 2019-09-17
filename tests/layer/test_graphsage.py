@@ -46,8 +46,6 @@ def example_graph_1(feature_size=None):
 
 
 # MaxPooling aggregator tests
-
-
 def test_maxpool_agg_constructor():
     agg = MaxPoolingAggregator(2, bias=False)
     assert agg.output_dim == 2
@@ -122,8 +120,6 @@ def test_maxpool_agg_zero_neighbours():
 
 
 # MeanPooling aggregator tests
-
-
 def test_meanpool_agg_constructor():
     agg = MeanPoolingAggregator(2, bias=False)
     assert agg.output_dim == 2
@@ -423,6 +419,42 @@ def test_graphsage_apply_1():
     xinp, xout = gs.node_model()
     model2 = keras.Model(inputs=xinp, outputs=xout)
     assert pytest.approx(expected) == model2.predict(x)
+
+
+def test_graphsage_apply_with_aggregator():
+    for agg_class in [
+        MaxPoolingAggregator,
+        MeanPoolingAggregator,
+        AttentionalAggregator,
+    ]:
+        gs = GraphSAGE(
+            layer_sizes=[2, 2, 2],
+            n_samples=[2, 2, 2],
+            bias=True,
+            input_dim=2,
+            normalize=None,
+            aggregator=agg_class,
+        )
+        for agg in gs._aggs:
+            agg._initializer = "ones"
+
+        inp = [keras.Input(shape=(i, 2)) for i in [1, 2, 4, 8]]
+        out = gs(inp)
+        model = keras.Model(inputs=inp, outputs=out)
+
+        x = [
+            np.array([[[1, 1]]]),
+            np.array([[[2, 2], [2, 2]]]),
+            np.array([[[3, 3], [3, 3], [3, 3], [3, 3]]]),
+            np.array(
+                [[[4, 4], [4, 4], [4, 4], [4, 4], [5, 5], [5, 5], [5, 5], [5, 5]]]
+            ),
+        ]
+        actual = model.predict(x)
+
+        xinp, xout = gs.node_model()
+        model2 = keras.Model(inputs=xinp, outputs=xout)
+        assert pytest.approx(actual) == model2.predict(x)
 
 
 def test_graphsage_serialize():

@@ -259,7 +259,7 @@ Neural Information Processing Systems (NIPS), 2017. ([link](https://arxiv.org/ab
 2. Node2Vec: Scalable Feature Learning for Networks. A. Grover, J. Leskovec. ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD), 2016. ([link](https://snap.stanford.edu/node2vec/))
 
 3. Metapath2Vec: Scalable Representation Learning for Heterogeneous Networks. Yuxiao Dong, Nitesh V. Chawla, and Ananthram Swami.
-ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD), 135–144, 2017
+ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD), 135-144, 2017
 ([link](https://ericdongyx.github.io/metapath2vec/m2v.html))
 
 4. Graph Attention Networks. P. Velickovic et al.
